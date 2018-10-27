@@ -4,7 +4,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-interface IConnection {
+public interface IConnection {
 
 	public enum Type {
 		IN, OUT, BOTH
@@ -25,4 +25,7 @@ interface IConnection {
 	public Type getTypeInContext(World worldIn, BlockPos posTile, ICableNetwork network, ICable cable, TileEntity tileEntity);
 	
 	public void update(UpdateContext context);
+	
+	public boolean isChunkLoaded(World world);
+	
 }
