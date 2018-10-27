@@ -4,6 +4,7 @@
 package harry.mod.objects.blocks.machines.electricalSinterer;
 
 import harry.mod.objects.blocks.BlockBase;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -55,4 +56,5 @@ public class BlockElectricalSinteringFurnace extends BlockBase {
 		worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()));
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
+	
 }

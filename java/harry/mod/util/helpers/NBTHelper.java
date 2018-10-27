@@ -17,14 +17,14 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 public class NBTHelper {
 
 	public static NBTTagCompound toNBT(Object o) {
-		if(o instanceof ItemStack)
-			return writeItemStack((ItemStack)o);
-		if(o instanceof TileEntityMiner){
-			return writeMiner((TileEntityMiner)o);
+		if (o instanceof ItemStack)
+			return writeItemStack((ItemStack) o);
+		if (o instanceof TileEntityMiner) {
+			return writeMiner((TileEntityMiner) o);
 		}
 		return null;
 	}
-	
+
 	private static NBTTagCompound writeMiner(TileEntityMiner o) {
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setInteger("y", o.y);
@@ -33,14 +33,19 @@ public class NBTHelper {
 		return compound;
 	}
 
-	private static NBTTagCompound writeItemStack(ItemStack i) {
+	public static NBTTagCompound writeItemStack(ItemStack i) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("count", i.getCount());
-		nbt.setString("item", i.getItem().getRegistryName().toString());
-		nbt.setByte("type", (byte) 0);
+		if (i.isEmpty()) {
+			nbt.setBoolean("isempty", true);
+		} else {
+			nbt.setBoolean("isempty", false);
+			nbt.setInteger("count", i.getCount());
+			nbt.setString("item", i.getItem().getRegistryName().toString());
+			nbt.setByte("type", (byte) 0);
+		}
 		return nbt;
 	}
-	
+
 	@Nullable
 	public static Object fromNBT(@Nonnull NBTTagCompound compound) {
 		switch (compound.getByte("type")) {
@@ -50,8 +55,10 @@ public class NBTHelper {
 			return null;
 		}
 	}
-	
-	private static ItemStack readItemStack(NBTTagCompound compound) {
+
+	public static ItemStack readItemStack(NBTTagCompound compound) {
+		if(compound.getBoolean("isempty"))
+			return ItemStack.EMPTY;
 		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("item")));
 		int count = compound.getInteger("count");
 		return new ItemStack(item, count);

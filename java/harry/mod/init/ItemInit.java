@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import harry.mod.objects.armour.ArmourBase;
+import harry.mod.objects.items.ItemBackPack;
 import harry.mod.objects.items.ItemBase;
 import harry.mod.objects.tools.ToolAxe;
 import harry.mod.objects.tools.ToolHoe;
@@ -35,6 +36,9 @@ public class ItemInit
 	public static final Item PICKAXE_COPPER = new ToolPickaxe("pickaxe_copper", TOOL_COPPER);
 	public static final Item SHOVEL_COPPER = new ToolShovel("shovel_copper", TOOL_COPPER);
 	public static final Item SWORD_COPPER = new ToolSword("sword_copper", TOOL_COPPER);
+	
+	//BackPack
+	public static final Item BACKPACK = new ItemBackPack();
 	
 	//Armour
 	public static final Item HELMET_COPPER = new ArmourBase("helmet_copper", ARMOUR_COPPER, 1, EntityEquipmentSlot.HEAD);

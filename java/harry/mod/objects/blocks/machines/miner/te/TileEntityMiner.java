@@ -1,17 +1,16 @@
 package harry.mod.objects.blocks.machines.miner.te;
 
-import harry.mod.Main;
-import harry.mod.util.interfaces.IHasModel;
+import static harry.mod.util.helpers.NBTHelper.toNBT;
+
 import net.minecraft.block.Block;
-import net.minecraft.entity.item.EntityItem;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
-import static harry.mod.util.helpers.NBTHelper.*;
 
 public class TileEntityMiner extends TileEntity implements ITickable {
 
@@ -33,21 +32,18 @@ public class TileEntityMiner extends TileEntity implements ITickable {
 	}
 
 	private void execute() {
-		int index = 0;
-		Block[] blocksRemoved = new Block[9];
 		for (int x = 0; x < 3; x++) {
 			for (int z = 0; z < 3; z++) {
 				BlockPos posToBreak = new BlockPos(this.x + x, this.y, this.z + z);
-				blocksRemoved[index] = this.world.getBlockState(posToBreak).getBlock();
+				IBlockState broken = world.getBlockState(posToBreak);
 				world.setBlockToAir(posToBreak);
-				index++;
+				NonNullList<ItemStack> drops = NonNullList.create();
+				broken.getBlock().getDrops(drops, world, posToBreak, broken, 0);
+				if(!world.isRemote)
+				for(ItemStack stack : drops) {
+					InventoryHelper.spawnItemStack(world, this.pos.getX(), this.pos.getY() + 1, this.pos.getZ(), stack);
+				}
 			}
-		}
-
-		for (Block block : blocksRemoved) {
-			if (!world.isRemote)
-				InventoryHelper.spawnItemStack(this.world, this.x + 1, this.pos.getY() + 2, this.z + 1,
-						new ItemStack(block));
 		}
 		this.y--;
 	}

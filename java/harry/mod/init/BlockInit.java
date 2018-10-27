@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import harry.mod.objects.blocks.*;
+import harry.mod.objects.blocks.machines.crafting.BlockDirtCraftingTable;
 import harry.mod.objects.blocks.machines.electricalSinterer.BlockElectricalSinteringFurnace;
 import harry.mod.objects.blocks.machines.miner.BlockMiner;
 import harry.mod.objects.blocks.machines.sinterer.BlockSinteringFurnace;
+import harry.mod.objects.blocks.machines.spawner.BlockSpawner;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
@@ -30,4 +32,6 @@ public class BlockInit
 	
 	public static final Block SINTERING_FURNACE = new BlockSinteringFurnace("sintering_furnace");
 	public static final Block MINER = new BlockMiner("miner", Material.ROCK);
+	public static final Block SPAWNER = new BlockSpawner("spawner", Material.ROCK);
+	public static final Block CRAFTER_DIRT = new BlockDirtCraftingTable();
 }
